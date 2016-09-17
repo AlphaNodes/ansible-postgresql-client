@@ -1,0 +1,20 @@
+- name: Add postgreSQL GPG key
+  apt_key:
+    id: ACCC4CF8
+    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+    state: present
+
+- name: Add postgreSQL debian repository
+  apt_repository:
+    repo: 'deb http://apt.postgresql.org/pub/repos/apt/ {{ ansible_distribution | lower }}-pgdg main'
+    state: present
+  notify:
+    - update package information
+
+- name: be sure postgresql client packages are installed
+  apt:
+    name: '{{ item }}'
+    state: "{{ apt_state | default('present') }}"
+    update_cache: "{{ apt_update_cache | default('yes') }}"
+    cache_valid_time: '{{ apt_cache_valid_time | default(600) }}'
+  with_items: '{{ postgresql_client_packages }}'
