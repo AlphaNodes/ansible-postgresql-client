@@ -10,3 +10,5 @@ postgresql_client_use_repo: yes
 postgresql_client_version: "{{ postgresql_version | default('9.5') }}"
 postgresql_client_packages:
  - postgresql-client-{{ postgresql_version | default(postgresql_client_version) }}
+
+postgresql_client_more_clients: yes
