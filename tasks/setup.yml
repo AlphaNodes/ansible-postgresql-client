@@ -7,16 +7,13 @@
 - name: Add postgreSQL debian repository
   apt_repository:
     repo: 'deb http://apt.postgresql.org/pub/repos/apt/ {{ ansible_distribution_release }}-pgdg main'
+    update_cache: yes
     state: present
-  notify:
-    - update package information
 
 - name: Be sure postgreSQL client packages are installed
   apt:
     name: '{{ item }}'
-    state: "{{ apt_state | default('present') }}"
-    update_cache: "{{ apt_update_cache | default('yes') }}"
-    cache_valid_time: '{{ apt_cache_valid_time | default(600) }}'
+    state: present
   with_items: '{{ postgresql_client_packages }}'
 
 - name: Check if PHP package is required
@@ -28,7 +25,5 @@
 - name: Install PHP package (if required)
   apt:
     name: '{{ postgresql_client_php_package }}'
-    state: "{{ apt_state | default('present') }}"
-    update_cache: "{{ apt_update_cache | default('yes') }}"
-    cache_valid_time: '{{ apt_cache_valid_time | default(600) }}'
+    state: present
   when: php_installed.rc == 0
