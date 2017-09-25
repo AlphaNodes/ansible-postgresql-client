@@ -13,5 +13,5 @@
   when: ansible_distribution == 'Ubuntu' and php_use_ppa
   tags: postgresql
 
-- include: setup.yml
+- include_tasks: setup.yml
   tags: postgresql
