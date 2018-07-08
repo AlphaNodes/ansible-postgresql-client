@@ -1,18 +1,11 @@
-- name: Include OS-specific variables (Debian/Ubuntu<=15.10).
-  include_vars: default.yml
-  when: >
-    ansible_distribution == 'Debian' and ansible_distribution_major_version != '9'
-      or (ansible_distribution == 'Ubuntu' and ansible_distribution_major_version != '16' and not php_use_ppa)
+- name: Include OS-specific variables (Debian).
+  include_vars: '{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'
+  when: ansible_distribution == 'Debian'
   tags: postgresql
 
-- name: Include OS-specific variables (Debian9).
+- name: Include OS-specific variables (Ubuntu).
   include_vars: '{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'
-  when: ansible_distribution == 'Debian' and ansible_distribution_major_version == '9'
-  tags: postgresql
-
-- name: Include OS-specific variables (Ubuntu 16.04).
-  include_vars: '{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version == '16' and not php_use_ppa
+  when: ansible_distribution == 'Ubuntu' and not php_use_ppa
   tags: postgresql
 
 - name: Include OS-specific variables (Ubuntu with PPA).

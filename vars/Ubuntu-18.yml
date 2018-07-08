@@ -1,0 +1,3 @@
+---
+postgresql_client_check_php_package: php-common
+postgresql_client_php_package: php-pgsql
