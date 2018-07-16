@@ -19,7 +19,7 @@ script:
   # Run tests.
   - ${PWD}/tests/test.sh
 
-  # Check if memcached is running.
+  # Check if psql is available.
   - 'docker exec --tty ${container_id} env TERM=xterm psql --help'
 
 notifications:
