@@ -1,6 +1,6 @@
 ---
 postgresql_client_check_php_package: php-common
 postgresql_client_php_package: php-pgsql
-postgresql_client_packages_extras:
+postgresql_client_packages_prerequire:
   - gpg
   - gpg-agent

@@ -1,3 +1,9 @@
+- name: Be sure postgreSQL client packages (prerequire) are installed
+  apt:
+    name: '{{ item }}'
+    state: present
+  with_items: '{{ postgresql_client_packages_prerequire }}'
+
 - name: Add postgreSQL GPG key
   apt_key:
     url: '{{ postgresql_repo_key_url }}'
@@ -14,12 +20,6 @@
     name: '{{ item }}'
     state: present
   with_items: '{{ postgresql_client_packages }}'
-
-- name: Be sure postgreSQL client packages (extras) are installed
-  apt:
-    name: '{{ item }}'
-    state: present
-  with_items: '{{ postgresql_client_packages_extras }}'
 
 - name: Check if PHP package is required
   shell: dpkg -s {{ postgresql_client_check_php_package }} | grep 'install ok installed'
