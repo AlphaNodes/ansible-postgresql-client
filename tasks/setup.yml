@@ -1,6 +1,6 @@
 - name: Add postgreSQL GPG key
   apt_key:
-    url: '{{ postgresql_repo_key_url }}
+    url: '{{ postgresql_repo_key_url }}'
     state: present
 
 - name: Add postgreSQL debian repository
