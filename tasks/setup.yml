@@ -19,14 +19,16 @@
     name: '{{ postgresql_client_packages }}'
     state: present
 
+- name: Gather the package facts
+  package_facts:
+    manager: auto
+
 - name: Check if PHP package is required
-  shell: dpkg -s {{ postgresql_client_check_php_package }} | grep 'install ok installed'
-  failed_when: php_installed.rc > 1
-  register: php_installed
-  changed_when: no
+  set_fact:
+    php_installed: "{{ true if postgresql_client_check_php_package in ansible_facts.packages else false }}"
 
 - name: Install PHP package (if required)
   apt:
     name: '{{ postgresql_client_php_package }}'
     state: present
-  when: php_installed.rc == 0
+  when: php_installed
